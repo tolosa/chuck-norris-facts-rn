@@ -2,14 +2,21 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, Button, View } from 'react-native';
 
 // TODO: move screen to separate file
+// TODO: add loading indicator
 class HomeScreen extends Component {
-  getFact = () => { // TODO: improve method syntax
-    let factText = 'New Chuck Norris fact'
-    this.setState({fact: factText})
+  state = {fact: 'Loading...'}
+  getFact = async () => { // TODO: improve method syntax
+    try {
+      const response = await fetch('https://api.chucknorris.io/jokes/random')
+      const responseJson = await response.json()
+      const factText = responseJson.value
+      this.setState({fact: factText})
+    } catch (e) {
+      // TODO: add error handling
+    }
   }
   componentWillMount() {
-    let factText = 'Chuck Norris fact text placeholder'
-    this.setState({fact: factText})
+    this.getFact()
   }
   render() {
     const {fact} = this.state
