@@ -3,11 +3,20 @@ import { StyleSheet, Text, Button, View } from 'react-native';
 
 // TODO: move screen to separate file
 class HomeScreen extends Component {
+  getFact = () => { // TODO: improve method syntax
+    let factText = 'New Chuck Norris fact'
+    this.setState({fact: factText})
+  }
+  componentWillMount() {
+    let factText = 'Chuck Norris fact text placeholder'
+    this.setState({fact: factText})
+  }
   render() {
+    const {fact} = this.state
     return (
       <View style={styles.container}>
-        <Text>Chuck Norris fact text placeholder</Text>
-        <Button title='Get new' />
+        <Text>{fact}</Text>
+        <Button title='Get new' onPress={this.getFact} />
       </View>
     )
   }
