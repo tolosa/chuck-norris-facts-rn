@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, Button, ActivityIndicator, View } from 'react-native';
+import { Header } from 'react-native-elements'
 
 // TODO: move screen to separate file
 // TODO: add loading indicator
@@ -24,6 +25,7 @@ class HomeScreen extends Component {
     const {fact, loading} = this.state
     return (
       <View style={styles.container}>
+        <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} />
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
@@ -44,10 +46,15 @@ export default class App extends Component {
 // TODO: move styles to separate file
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column',
     flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  header: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   factText: {
     fontSize: 20,
