@@ -29,7 +29,7 @@ class HomeScreen extends Component {
         ) : (
           <Text style={styles.factText}>{fact}</Text>
         )}
-        <Button title='Get new' onPress={this.getFact} disabled={loading} />
+        <Button title='Hit me!' onPress={this.getFact} disabled={loading} />
       </View>
     )
   }
