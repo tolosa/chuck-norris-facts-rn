@@ -27,7 +27,7 @@ class HomeScreen extends Component {
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
-          <Text>{fact}</Text>
+          <Text style={styles.factText}>{fact}</Text>
         )}
         <Button title='Get new' onPress={this.getFact} disabled={loading} />
       </View>
@@ -49,4 +49,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+  factText: {
+    fontSize: 20,
+    lineHeight: 28,
+    padding: 12,
+  },
+})
