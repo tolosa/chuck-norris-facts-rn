@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, Button, ActivityIndicator, View } from 'react-native';
-import { Header } from 'react-native-elements'
+import React, {Component} from 'react'
+import { StyleSheet, Text, ActivityIndicator, View } from 'react-native'
+import { Header, Button } from 'react-native-elements'
 
 // TODO: move screen to separate file
 // TODO: add loading indicator
@@ -31,7 +31,7 @@ class HomeScreen extends Component {
         ) : (
           <Text style={styles.factText}>{fact}</Text>
         )}
-        <Button title='Hit me!' onPress={this.getFact} disabled={loading} />
+        <Button title='HIT ME!' onPress={this.getFact} buttonStyle={styles.reloadButton} disabled={loading} />
       </View>
     )
   }
@@ -60,5 +60,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 28,
     padding: 12,
+  },
+  reloadButton: {
+    marginBottom: 15,
+    borderRadius: 5,
   },
 })
