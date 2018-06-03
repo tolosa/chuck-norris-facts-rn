@@ -12,7 +12,10 @@ class HomeScreen extends Component {
   getFact = async () => {
     try {
       this.setState({loading: true})
-      const response = await fetch('https://api.chucknorris.io/jokes/random')
+      let url = 'https://api.chucknorris.io/jokes/random'
+      const category = this.state.category
+      if(category && category !== 'any') url += `?category=${category}` // TODO: find proper way of building URL parameters
+      const response = await fetch(url)
       const responseJson = await response.json()
       const factText = responseJson.value
       this.setState({fact: factText})
@@ -34,11 +37,11 @@ class HomeScreen extends Component {
     }
   }
   componentWillMount() {
+    this.getFact() // TODO: fix initial loading of fact
     this.getCategories()
-    this.getFact()
   }
   render() {
-    const {fact, loading, categories} = this.state
+    const {fact, loading, categories, category} = this.state
     return (
       <View style={styles.container}>
         <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} />
@@ -49,7 +52,8 @@ class HomeScreen extends Component {
         )}
         <View>
           <FormLabel>Categories</FormLabel>
-          <Picker>
+          <Picker selectedValue={category}
+            onValueChange={(value, index) => this.setState({category: value})}>
             { categories.map((item, key)=>(
               <Picker.Item label={item.capitalize()} value={item} key={key} />)
             )}
