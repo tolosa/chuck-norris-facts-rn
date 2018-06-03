@@ -51,8 +51,9 @@ class HomeScreen extends Component {
           <Text style={styles.factText}>{fact}</Text>
         )}
         <View>
-          <FormLabel>Categories</FormLabel>
+          <FormLabel>CATEGORIES</FormLabel>
           <Picker selectedValue={category}
+            itemStyle={styles.categoriesSelector}
             onValueChange={(value, index) => this.setState({category: value})}>
             { categories.map((item, key)=>(
               <Picker.Item label={item.capitalize()} value={item} key={key} />)
@@ -92,5 +93,10 @@ const styles = StyleSheet.create({
   reloadButton: {
     marginBottom: 15,
     borderRadius: 5,
+  },
+  categoriesSelector: {
+    textAlign: 'left',
+    marginLeft: 20,
+    fontSize: 18,
   },
 })
