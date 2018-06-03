@@ -1,6 +1,10 @@
-import React, {Component} from 'react'
-import { StyleSheet, Text, ActivityIndicator, View } from 'react-native'
-import { Header, Button } from 'react-native-elements'
+import React, { Component } from 'react'
+import { StyleSheet, Text, Picker, ActivityIndicator, View } from 'react-native'
+import { Header, Button, FormLabel } from 'react-native-elements'
+
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1)
+}
 
 // TODO: move screen to separate file
 // TODO: add loading indicator
@@ -18,11 +22,23 @@ class HomeScreen extends Component {
       this.setState({loading: false})
     }
   }
+  getCategories = async() => {
+    try {
+      this.setState({categories: []})
+      const response = await fetch('https://api.chucknorris.io/jokes/categories')
+      const categories = await response.json()
+      categories.sort().unshift('any')
+      this.setState({categories: categories})
+    } catch (e) {
+      // TODO: add error handling
+    }
+  }
   componentWillMount() {
+    this.getCategories()
     this.getFact()
   }
   render() {
-    const {fact, loading} = this.state
+    const {fact, loading, categories} = this.state
     return (
       <View style={styles.container}>
         <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} />
@@ -31,7 +47,15 @@ class HomeScreen extends Component {
         ) : (
           <Text style={styles.factText}>{fact}</Text>
         )}
-        <Button title='HIT ME!' onPress={this.getFact} buttonStyle={styles.reloadButton} disabled={loading} />
+        <View>
+          <FormLabel>Categories</FormLabel>
+          <Picker>
+            { categories.map((item, key)=>(
+              <Picker.Item label={item.capitalize()} value={item} key={key} />)
+            )}
+          </Picker>
+          <Button title='HIT ME!' onPress={this.getFact} buttonStyle={styles.reloadButton} disabled={loading} />
+        </View>
       </View>
     )
   }
