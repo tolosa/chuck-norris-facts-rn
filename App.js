@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Picker, ActivityIndicator, View } from 'react-native'
-import { Header, Button, FormLabel } from 'react-native-elements'
+import { Header, Button, FormLabel, Icon } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
 String.prototype.capitalize = function() {
@@ -10,6 +10,9 @@ String.prototype.capitalize = function() {
 // TODO: move screen to separate file
 // TODO: add loading indicator
 class FactsScreen extends Component {
+  static navigationOptions = {
+    tabBarIcon: ({tintColor}) => <Icon name='mood' color={tintColor} />
+  }
   getFact = async () => {
     try {
       this.setState({loading: true})
@@ -68,10 +71,12 @@ class FactsScreen extends Component {
 }
 
 class FavoritesScreen extends Component {
+  static navigationOptions = {
+    tabBarIcon: ({tintColor}) => <Icon name='star' color={tintColor} />
+  }
   render() {
     return (
       <View>
-        <Text>TOOD: show favorites list here</Text>
       </View>
     )
   }
