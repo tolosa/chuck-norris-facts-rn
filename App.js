@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Picker, ActivityIndicator, View } from 'react-native'
 import { Header, Button, FormLabel } from 'react-native-elements'
+import { createBottomTabNavigator } from 'react-navigation'
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
@@ -8,7 +9,7 @@ String.prototype.capitalize = function() {
 
 // TODO: move screen to separate file
 // TODO: add loading indicator
-class HomeScreen extends Component {
+class FactsScreen extends Component {
   getFact = async () => {
     try {
       this.setState({loading: true})
@@ -44,7 +45,7 @@ class HomeScreen extends Component {
     const {fact, loading, categories, category} = this.state
     return (
       <View style={styles.container}>
-        <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} />
+        <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} /> // TODO: show header on all screens
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
@@ -66,11 +67,20 @@ class HomeScreen extends Component {
   }
 }
 
-export default class App extends Component {
+class FavoritesScreen extends Component {
   render() {
-    return <HomeScreen />
+    return (
+      <View>
+        <Text>TOOD: show favorites list here</Text>
+      </View>
+    )
   }
 }
+
+export default createBottomTabNavigator({
+  Facts: FactsScreen,
+  Favorites: FavoritesScreen,
+})
 
 // TODO: move styles to separate file
 const styles = StyleSheet.create({
