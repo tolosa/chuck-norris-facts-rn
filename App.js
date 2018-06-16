@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Picker, ActivityIndicator, View } from 'react-native'
-import { Header, Button, FormLabel, Icon } from 'react-native-elements'
+import { Header, Button, FormLabel, Icon, CheckBox } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
 String.prototype.capitalize = function() {
@@ -8,9 +8,26 @@ String.prototype.capitalize = function() {
 }
 
 class Joke extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {faved: false}
+  }
+  onFaved = () => {
+    this.setState({faved: !this.state.faved})
+  }
   render() {
+    const FAV_COLOR = '#ffda3b'
     return (
-      <Text style={styles.factText}>{this.props.children}</Text>
+      <View>
+        <Text style={styles.factText}>{this.props.children}</Text>
+        <CheckBox
+          size={30} checkedColor={FAV_COLOR} uncheckedColor={FAV_COLOR}
+          iconType='material' checkedIcon='star' uncheckedIcon='star-border'
+          containerStyle={styles.favCheckContainer}
+          checked={this.state.faved}
+          onPress={this.onFaved}
+        />
+      </View>
     )
   }
 }
@@ -20,7 +37,7 @@ class FactsScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => <Icon name='mood' color={tintColor} />
   }
-  getFact = async () => {
+  getFact = async() => {
     try {
       this.setState({loading: true})
       let url = 'https://api.chucknorris.io/jokes/random'
@@ -109,7 +126,13 @@ const styles = StyleSheet.create({
   factText: {
     fontSize: 20,
     lineHeight: 28,
-    padding: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  favCheckContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    padding: 0,
   },
   reloadButton: {
     marginBottom: 15,
