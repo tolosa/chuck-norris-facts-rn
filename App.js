@@ -7,8 +7,15 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
+class Joke extends Component {
+  render() {
+    return (
+      <Text style={styles.factText}>{this.props.children}</Text>
+    )
+  }
+}
+
 // TODO: move screen to separate file
-// TODO: add loading indicator
 class FactsScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => <Icon name='mood' color={tintColor} />
@@ -52,7 +59,7 @@ class FactsScreen extends Component {
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
-          <Text style={styles.factText}>{fact}</Text>
+          <Joke>{fact}</Joke>
         )}
         <View>
           <FormLabel>CATEGORIES</FormLabel>
@@ -76,8 +83,7 @@ class FavoritesScreen extends Component {
   }
   render() {
     return (
-      <View>
-      </View>
+      <View></View>
     )
   }
 }
