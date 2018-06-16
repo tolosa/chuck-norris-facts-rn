@@ -17,9 +17,9 @@ class Joke extends Component {
   }
   render() {
     const FAV_COLOR = '#ffda3b'
-    return (
+    return !this.props.fact ? null : (
       <View>
-        <Text style={styles.factText}>{this.props.children}</Text>
+        <Text style={styles.factText}>{this.props.fact.value}</Text>
         <CheckBox
           size={30} checkedColor={FAV_COLOR} uncheckedColor={FAV_COLOR}
           iconType='material' checkedIcon='star' uncheckedIcon='star-border'
@@ -44,9 +44,8 @@ class FactsScreen extends Component {
       const category = this.state.category
       if(category && category !== 'any') url += `?category=${category}` // TODO: find proper way of building URL parameters
       const response = await fetch(url)
-      const responseJson = await response.json()
-      const factText = responseJson.value
-      this.setState({fact: factText})
+      const fact = await response.json()
+      this.setState({fact})
     } catch (e) {
       // TODO: add error handling
     } finally {
@@ -76,7 +75,7 @@ class FactsScreen extends Component {
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
-          <Joke>{fact}</Joke>
+          <Joke fact={fact} />
         )}
         <View>
           <FormLabel>CATEGORIES</FormLabel>
