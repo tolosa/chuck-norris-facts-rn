@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, Picker, ActivityIndicator, View } from 'react-native'
+import { StyleSheet, Text, Picker, ActivityIndicator, View, AsyncStorage } from 'react-native'
 import { Header, Button, FormLabel, Icon, CheckBox } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
@@ -10,10 +10,34 @@ String.prototype.capitalize = function() {
 class Joke extends Component {
   constructor(props) {
     super(props)
-    this.state = {faved: false}
+    this.state = {faved: false} // TODO: remove this, should not be necessary
+    if(!props.fact) return
+    this.factIsFaved(props.fact).then(faved => {
+      this.setState({faved})
+    })
   }
   onFaved = () => {
-    this.setState({faved: !this.state.faved})
+    const faved = !this.state.faved
+    this.setState({faved})
+    const fact = this.props.fact
+    if(faved) {
+      this.favFact(fact)
+    } else {
+      this.unfavFact(fact)
+    }
+  }
+  factIsFaved(fact) {
+    if(!fact) return false
+    return AsyncStorage.getItem(fact.id)
+      .then(val => {
+        return !!val
+      })
+  }
+  favFact(fact) {
+    AsyncStorage.setItem(fact.id, fact.value)
+  }
+  unfavFact(fact) {
+    AsyncStorage.removeItem(fact.id)
   }
   render() {
     const FAV_COLOR = '#ffda3b'
