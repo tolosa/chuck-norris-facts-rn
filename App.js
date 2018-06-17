@@ -187,10 +187,11 @@ const styles = StyleSheet.create({
     paddingRight: 12,
   },
   factText__list: {
-    fontSize: 15,
+    fontSize: 16,
     lineHeight: 20,
     paddingLeft: 12,
     paddingRight: 12,
+    marginTop: 5,
   },
   favCheckContainer: {
     backgroundColor: 'transparent',
@@ -198,8 +199,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   favoritesDivider: {
-    marginTop: 4,
-    marginBottom: 6,
+    marginBottom: 5,
   },
   reloadButton: {
     marginBottom: 15,
