@@ -3,6 +3,9 @@ import { StyleSheet, Text, Picker, ActivityIndicator, View, FlatList, AsyncStora
 import { Header, Button, FormLabel, Icon, CheckBox, Divider } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
+const PRIMARY_COLOR = '#3470e2'
+const FAV_COLOR = '#ffda3b'
+
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
@@ -50,7 +53,6 @@ class Fact extends Component {
     }
   }
   render() {
-    const FAV_COLOR = '#ffda3b'
     return !this.props.fact ? null : (
       <View>
         <Text style={styles.factText}>{this.props.fact.value}</Text>
@@ -105,7 +107,9 @@ class FactsScreen extends Component {
     const {fact, loading, categories, category} = this.state
     return (
       <View style={styles.container}>
-        <Header centerComponent={{text: 'GET CHUCK NORRIS FACTS', style: styles.header}} />
+        <Header
+          centerComponent={{text: 'GET CHUCK NORRIS FACTS', style: styles.header}}
+          backgroundColor={PRIMARY_COLOR} />
         { loading ? ( // TODO: change activity indicator, show only on button
           <ActivityIndicator size='large' />
         ) : (
@@ -120,7 +124,10 @@ class FactsScreen extends Component {
               <Picker.Item label={item.capitalize()} value={item} key={key} />
             )}
           </Picker>
-          <Button title='HIT ME!' onPress={this.getFact} buttonStyle={styles.reloadButton} disabled={loading} />
+          <Button title='HIT ME!'
+            onPress={this.getFact}
+            buttonStyle={styles.reloadButton}
+            disabled={loading} backgroundColor={PRIMARY_COLOR} />
         </View>
       </View>
     )
@@ -139,7 +146,9 @@ class FavoritesScreen extends Component {
   render() {
     return (
       <View>
-        <Header centerComponent={{text: 'MY FAVORITE FACTS', style: styles.header}} />
+        <Header
+          centerComponent={{text: 'MY FAVORITE FACTS', style: styles.header}}
+          backgroundColor={PRIMARY_COLOR} />
         <FlatList
           data={favorites.list}
           renderItem={this.renderRow}
