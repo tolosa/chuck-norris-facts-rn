@@ -207,7 +207,8 @@ const styles = StyleSheet.create({
   },
   categoriesSelector: {
     textAlign: 'left',
-    marginLeft: 20,
-    fontSize: 18,
+    height: 160,
+    marginLeft: 22,
+    fontSize: 17,
   },
 })
