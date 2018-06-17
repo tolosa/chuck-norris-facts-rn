@@ -35,7 +35,7 @@ class FavoritesStore {
 
 const favorites = new FavoritesStore()
 
-class Joke extends Component {
+class Fact extends Component {
   constructor(props) {
     super(props)
     this.state = {faved: favorites.isFavorite(props.fact)}
@@ -110,7 +110,7 @@ class FactsScreen extends Component {
         { loading ? (
           <ActivityIndicator size='large' />
         ) : (
-          <Joke fact={fact} />
+          <Fact fact={fact} />
         )}
         <View>
           <FormLabel>CATEGORIES</FormLabel>
