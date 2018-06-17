@@ -55,7 +55,7 @@ class Fact extends Component {
   render() {
     return !this.props.fact ? null : (
       <View>
-        <Text style={styles.factText}>{this.props.fact.value}</Text>
+        <Text style={styles[`factText__${this.props.variant}`]}>{this.props.fact.value}</Text>
         <CheckBox
           size={30} checkedColor={FAV_COLOR} uncheckedColor={FAV_COLOR}
           iconType='material' checkedIcon='star' uncheckedIcon='star-border'
@@ -113,7 +113,7 @@ class FactsScreen extends Component {
         { loading ? ( // TODO: change activity indicator, show only on button
           <ActivityIndicator size='large' />
         ) : (
-          <Fact fact={fact} />
+          <Fact fact={fact} variant='detail' />
         )}
         <View>
           <FormLabel>CATEGORIES</FormLabel>
@@ -140,7 +140,7 @@ class FavoritesScreen extends Component {
   }
   renderRow(data) {
     return (
-      <Fact fact={data.item} />
+      <Fact fact={data.item} variant='list' />
     )
   }
   render() {
@@ -180,9 +180,15 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  factText: {
+  factText__detail: {
     fontSize: 20,
-    lineHeight: 28,
+    lineHeight: 25,
+    paddingLeft: 12,
+    paddingRight: 12,
+  },
+  factText__list: {
+    fontSize: 15,
+    lineHeight: 20,
     paddingLeft: 12,
     paddingRight: 12,
   },
