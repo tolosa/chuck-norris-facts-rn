@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, Picker, ActivityIndicator, View, AsyncStorage } from 'react-native'
+import { StyleSheet, Text, Picker, ActivityIndicator, View, FlatList, AsyncStorage } from 'react-native'
 import { Header, Button, FormLabel, Icon, CheckBox } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
@@ -132,9 +132,18 @@ class FavoritesScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({tintColor}) => <Icon name='star' color={tintColor} />
   }
+  renderRow(data) {
+    return (
+      <Fact fact={data.item} />
+    )
+  }
   render() {
     return (
-      <View></View>
+      <FlatList
+        data={favorites.list}
+        renderItem={this.renderRow}
+        keyExtractor={(item, index) => item.id}
+      />
     )
   }
 }
