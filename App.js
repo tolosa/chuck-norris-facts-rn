@@ -7,37 +7,48 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
+class FavoritesStore {
+  constructor() {
+    this.list = [] // TODO: find better way to solve this
+    this.loadFavoritesFromStorage().then(favorites => {
+      this.list = favorites
+    })
+  }
+  addFact(fact) {
+    AsyncStorage.setItem(fact.id, JSON.stringify(fact))
+    this.list.push(fact)
+  }
+  removeFact(fact) {
+    AsyncStorage.removeItem(fact.id)
+    const index = this.list.findIndex(item => item.id === fact.id)
+    if (index > -1) this.list.splice(index, 1)
+  }
+  isFavorite(fact) {
+    return !!this.list.find(item => item.id === fact.id)
+  }
+  loadFavoritesFromStorage() {
+    return AsyncStorage.getAllKeys()
+      .then(keys => AsyncStorage.multiGet(keys))
+      .then(values => values.map(value => JSON.parse(value[1])))
+  }
+}
+
+const favorites = new FavoritesStore()
+
 class Joke extends Component {
   constructor(props) {
     super(props)
-    this.state = {faved: false} // TODO: remove this, should not be necessary
-    if(!props.fact) return
-    this.factIsFaved(props.fact).then(faved => {
-      this.setState({faved})
-    })
+    this.state = {faved: favorites.isFavorite(props.fact)}
   }
   onFaved = () => {
     const faved = !this.state.faved
     this.setState({faved})
     const fact = this.props.fact
     if(faved) {
-      this.favFact(fact)
+      favorites.addFact(fact)
     } else {
-      this.unfavFact(fact)
+      favorites.removeFact(fact)
     }
-  }
-  factIsFaved(fact) {
-    if(!fact) return false
-    return AsyncStorage.getItem(fact.id)
-      .then(val => {
-        return !!val
-      })
-  }
-  favFact(fact) {
-    AsyncStorage.setItem(fact.id, fact.value)
-  }
-  unfavFact(fact) {
-    AsyncStorage.removeItem(fact.id)
   }
   render() {
     const FAV_COLOR = '#ffda3b'
