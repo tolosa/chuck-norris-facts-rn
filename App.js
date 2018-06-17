@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Picker, ActivityIndicator, View, FlatList, AsyncStorage } from 'react-native'
-import { Header, Button, FormLabel, Icon, CheckBox } from 'react-native-elements'
+import { Header, Button, FormLabel, Icon, CheckBox, Divider } from 'react-native-elements'
 import { createBottomTabNavigator } from 'react-navigation'
 
 String.prototype.capitalize = function() {
@@ -143,6 +143,9 @@ class FavoritesScreen extends Component {
         data={favorites.list}
         renderItem={this.renderRow}
         keyExtractor={(item, index) => item.id}
+        ItemSeparatorComponent={() =>
+          <Divider style={styles.favoritesDivider} />
+        }
       />
     )
   }
@@ -176,6 +179,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 0,
     padding: 0,
+  },
+  favoritesDivider: {
+    marginTop: 4,
+    marginBottom: 6,
   },
   reloadButton: {
     marginBottom: 15,
