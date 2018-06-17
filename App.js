@@ -10,9 +10,8 @@ String.prototype.capitalize = function() {
 class FavoritesStore {
   constructor() {
     this.list = [] // TODO: find better way to solve this
-    this.loadFavoritesFromStorage().then(favorites => {
-      this.list = favorites
-    })
+    this.loadFavoritesFromStorage()
+      .then(favorites => this.list = favorites)
   }
   addFact(fact) {
     AsyncStorage.setItem(fact.id, JSON.stringify(fact))
@@ -24,7 +23,7 @@ class FavoritesStore {
     if (index > -1) this.list.splice(index, 1)
   }
   isFavorite(fact) {
-    return !!this.list.find(item => item.id === fact.id)
+    return this.list.findIndex(item => item.id === fact.id) > -1
   }
   loadFavoritesFromStorage() {
     return AsyncStorage.getAllKeys()
@@ -106,8 +105,8 @@ class FactsScreen extends Component {
     const {fact, loading, categories, category} = this.state
     return (
       <View style={styles.container}>
-        <Header centerComponent={{ text: 'CHUCK NORRIS FACTS', style: styles.header }} /> // TODO: show header on all screens
-        { loading ? (
+        <Header centerComponent={{text: 'CHUCK NORRIS FACTS', style: styles.header}} /> // TODO: show header on all screens
+        { loading ? ( // TODO: change activity indicator, show only on button
           <ActivityIndicator size='large' />
         ) : (
           <Fact fact={fact} />
@@ -117,8 +116,8 @@ class FactsScreen extends Component {
           <Picker selectedValue={category}
             itemStyle={styles.categoriesSelector}
             onValueChange={(value, index) => this.setState({category: value})}>
-            { categories.map((item, key)=>(
-              <Picker.Item label={item.capitalize()} value={item} key={key} />)
+            { categories.map((item, key) =>
+              <Picker.Item label={item.capitalize()} value={item} key={key} />
             )}
           </Picker>
           <Button title='HIT ME!' onPress={this.getFact} buttonStyle={styles.reloadButton} disabled={loading} />
