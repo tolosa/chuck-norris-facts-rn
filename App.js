@@ -105,7 +105,7 @@ class FactsScreen extends Component {
     const {fact, loading, categories, category} = this.state
     return (
       <View style={styles.container}>
-        <Header centerComponent={{text: 'CHUCK NORRIS FACTS', style: styles.header}} /> // TODO: show header on all screens
+        <Header centerComponent={{text: 'GET CHUCK NORRIS FACTS', style: styles.header}} />
         { loading ? ( // TODO: change activity indicator, show only on button
           <ActivityIndicator size='large' />
         ) : (
@@ -138,14 +138,17 @@ class FavoritesScreen extends Component {
   }
   render() {
     return (
-      <FlatList
-        data={favorites.list}
-        renderItem={this.renderRow}
-        keyExtractor={(item, index) => item.id}
-        ItemSeparatorComponent={() =>
-          <Divider style={styles.favoritesDivider} />
-        }
-      />
+      <View>
+        <Header centerComponent={{text: 'MY FAVORITE FACTS', style: styles.header}} />
+        <FlatList
+          data={favorites.list}
+          renderItem={this.renderRow}
+          keyExtractor={(item, index) => item.id}
+          ItemSeparatorComponent={() =>
+            <Divider style={styles.favoritesDivider} />
+          }
+        />
+      </View>
     )
   }
 }
